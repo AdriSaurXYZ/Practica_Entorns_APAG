@@ -5,6 +5,7 @@ Clase que permite validar el formulario de registro de usuario
 package registro;
 public class ValidarCampos {
 
+
 /**
  * Método que valida el formulario de registro de usuario
  * @param registroUsuario objeto de tipo RegistroUsuario con los datos del usuario

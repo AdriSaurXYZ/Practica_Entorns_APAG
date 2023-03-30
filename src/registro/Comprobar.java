@@ -1,62 +1,78 @@
 /**
- * It validates the user's input and throws an exception if the input is not valid
- */
+
+The Comprobar class validates the user's input for a registration form, including username, password, email, and security code.
+*/
 package registro;
 import java.util.Random;
 import java.util.Scanner;
+public class Comprobar {
+static Random rnd = new Random();
+static StringBuilder sb = new StringBuilder(8);
+static Scanner scanner = new Scanner(System.in);
 
-        public class Comprobar {
-            static Random rnd = new Random();
-            static StringBuilder sb = new StringBuilder(8);
-            static Scanner scanner = new Scanner(System.in);
-            
-            // Base de datos de nombres de usuarios
-            static final String[] nombresUsuarios = {"Carles_345", "AnaGomez-783", "Pepito_999", "Laura_222",
-                    "Juanito-111", "Marta_444", "Pedro_777", "Sofia-666", "David_555", "Lucia888"};
-        
-            // Método para comprobar el nombre de usuario
-            public static boolean compruebaNombre(String[] usuarios, String nombreUsuario) {
-                boolean valido = false;
-        
-                // Comprobar que el nombre cumple las restricciones
-                if (nombreUsuario.matches("^[A-Z][a-z]+[-_][0-9]{3}$") && nombreUsuario.length() <= 16) {
-                    // Comprobar que el nombre no está en la base de datos
-                    for (String n : usuarios) {
-                        if (n.equalsIgnoreCase(nombreUsuario)) {
-                            System.out.println("El nombre de usuario ya existe");
-                            return false;
-                        }
-                    }
-                    valido = true;
-                } else {
-                    System.out.println("El nombre de usuario no cumple las restricciones");
-                }
-        
-                return valido;
+
+// Database of user names
+static final String[] nombresUsuarios = {"Carles_345", "AnaGomez-783", "Pepito_999", "Laura_222",
+        "Juanito-111", "Marta_444", "Pedro_777", "Sofia-666", "David_555", "Lucia888"};
+
+/**
+ * This function validates the username input and checks whether it meets the required conditions.
+ * 
+ * @param usuarios The list of usernames to check against
+ * @param nombreUsuario The username string to validate
+ * @return A boolean value indicating whether the username is valid or not
+ */
+public static boolean compruebaNombre(String[] usuarios, String nombreUsuario) {
+    boolean valido = false;
+    
+    // Check if the username meets the required conditions
+    if (nombreUsuario.matches("^[A-Z][a-z]+[-_][0-9]{3}$") && nombreUsuario.length() <= 16) {
+        // Check if the username is already in the database
+        for (String n : usuarios) {
+            if (n.equalsIgnoreCase(nombreUsuario)) {
+                System.out.println("El nombre de usuario ya existe");
+                return false;
             }
-    
-    
-        // Método para comprobar la contraseña
-        public static boolean compruebaPassword(String password) {
-        boolean valido = false;
-
-        // Comprobar que la contraseña cumple las restricciones
-        if (password.matches("^[A-Z][a-zA-Z0-9_#@-]{6}[0-9]{2}$")) {
+        }
         valido = true;
-        } else {
+    } else {
+        System.out.println("El nombre de usuario no cumple las restricciones");
+    }
+    
+    return valido;
+}
+
+/**
+ * This function validates the password input and checks whether it meets the required conditions.
+ * 
+ * @param password The password string to validate
+ * @return A boolean value indicating whether the password is valid or not
+ */
+public static boolean compruebaPassword(String password) {
+    boolean valido = false;
+
+    // Check if the password meets the required conditions
+    if (password.matches("^[A-Z][a-zA-Z0-9_#@-]{6}[0-9]{2}$")) {
+        valido = true;
+    } else {
         System.out.println("La contraseña no cumple las restricciones");
-        }
+    }
 
-        return valido;
-        }
+    return valido;
+}
 
-        // Método para comprobar el correo electrónico
-        public static boolean compruebaEmail(String email) {
-            boolean valido = false;
-            
-    // Comprobar que el correo electrónico contiene un @ y acaba en .com, .es o .cat
+/**
+ * This function validates the email input and checks whether it meets the required conditions.
+ * 
+ * @param email The email string to validate
+ * @return A boolean value indicating whether the email is valid or not
+ */
+public static boolean compruebaEmail(String email) {
+    boolean valido = false;
+    
+    // Check if the email contains an @ symbol and ends with .com, .es or .cat
     if (email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.(com|es|cat)$")) {
-        // Comprobar que el dominio está permitido
+        // Check if the domain is allowed
         if (email.contains("@paucasesnovescifp") || email.contains("@yahoo") || email.contains("@gmail")
             || email.contains("@hotmail")) {
             valido = true;
@@ -84,25 +100,56 @@ import java.util.Scanner;
         return sb.toString();
         }
 
-        // Método para comprobar el código de seguridads
-        public static boolean compruebaCodigoSeguridad(String codigo) {
-        boolean valido = false;
+        /**
 
-        // Comprobar que el código introducido coincide con el generado
-        System.out.println("Vuelve a introducir el código de seguridad generado:");
-        String codigoIntroducido = scanner.nextLine();
-        if (codigoIntroducido.equals(codigo)) {
-        valido = true;
-        System.out.println("El codigo  es correcto");
-        return valido;
+Clase que contiene dos métodos para generar y comprobar un código de seguridad aleatorio.
+*/
+public class CodigoSeguridad {
 
-        }
-        else{
-            System.out.println("El codigo no es correcto");
-            return valido;
-        }
-
+    /**
+    
+    Genera un código de seguridad aleatorio.
+    
+    @return una cadena de texto con el código de seguridad generado.
+    */
+    public static String generaCodigoSeguridad() {
+    String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#-";
+    StringBuilder sb = new StringBuilder();
+    Random rnd = new Random();
+    
+    for (int i = 0; i < 8; i++) {
+    sb.append(caracteres.charAt(rnd.nextInt(caracteres.length())));
     }
+    
+    System.out.println("El código de seguridad generado es: " + sb.toString());
+    
+    return sb.toString();
+    }
+    
+    /**
+    
+    Comprueba si un código de seguridad introducido por el usuario es válido.
+    
+    @param codigo una cadena de texto con el código de seguridad a comprobar.
+    
+    @return un valor booleano que indica si el código de seguridad introducido es válido o no.
+    */
+    public static boolean compruebaCodigoSeguridad(String codigo) {
+    boolean valido = false;
+    
+    // Comprobar que el código introducido coincide con el generado
+    System.out.println("Vuelve a introducir el código de seguridad generado:");
+    Scanner scanner = new Scanner(System.in);
+    String codigoIntroducido = scanner.nextLine();
+    if (codigoIntroducido.equals(codigo)) {
+    valido = true;
+    System.out.println("El código es correcto");
+    return valido;
+    
+    } else {
+    System.out.println("El código no es correcto");
+    return valido;
+    }}
 
     /**
      * This function validates the user's input and throws an exception if the input is invalid.
@@ -122,4 +169,4 @@ import java.util.Scanner;
         }
     }
 }
-
+}
