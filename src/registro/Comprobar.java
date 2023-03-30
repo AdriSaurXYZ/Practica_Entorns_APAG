@@ -86,6 +86,15 @@ public static boolean compruebaEmail(String email) {
     return valido;
 }
 
+        /**
+    
+    Comprueba si un código de seguridad introducido por el usuario es válido.
+    
+    @param codigo una cadena de texto con el código de seguridad a comprobar.
+    
+    @return un valor booleano que indica si el código de seguridad introducido es válido o no.
+    */
+
         // Método para generar un código de seguridad aleatorio
         public static String generaCodigoSeguridad() {
         String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#-";
@@ -100,56 +109,25 @@ public static boolean compruebaEmail(String email) {
         return sb.toString();
         }
 
-        /**
+        // Método para comprobar el código de seguridad
+        public static boolean compruebaCodigoSeguridad(String codigo) {
+        boolean valido = false;
 
-Clase que contiene dos métodos para generar y comprobar un código de seguridad aleatorio.
-*/
-public class CodigoSeguridad {
+        // Comprobar que el código introducido coincide con el generado
+        System.out.println("Vuelve a introducir el código de seguridad generado:");
+        String codigoIntroducido = scanner.nextLine();
+        if (codigoIntroducido.equals(codigo)) {
+        valido = true;
+        System.out.println("El codigo  es correcto");
+        return valido;
 
-    /**
-    
-    Genera un código de seguridad aleatorio.
-    
-    @return una cadena de texto con el código de seguridad generado.
-    */
-    public static String generaCodigoSeguridad() {
-    String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#-";
-    StringBuilder sb = new StringBuilder();
-    Random rnd = new Random();
-    
-    for (int i = 0; i < 8; i++) {
-    sb.append(caracteres.charAt(rnd.nextInt(caracteres.length())));
+        }
+        else{
+            System.out.println("El codigo no es correcto");
+            return valido;
+        }
+
     }
-    
-    System.out.println("El código de seguridad generado es: " + sb.toString());
-    
-    return sb.toString();
-    }
-    
-    /**
-    
-    Comprueba si un código de seguridad introducido por el usuario es válido.
-    
-    @param codigo una cadena de texto con el código de seguridad a comprobar.
-    
-    @return un valor booleano que indica si el código de seguridad introducido es válido o no.
-    */
-    public static boolean compruebaCodigoSeguridad(String codigo) {
-    boolean valido = false;
-    
-    // Comprobar que el código introducido coincide con el generado
-    System.out.println("Vuelve a introducir el código de seguridad generado:");
-    Scanner scanner = new Scanner(System.in);
-    String codigoIntroducido = scanner.nextLine();
-    if (codigoIntroducido.equals(codigo)) {
-    valido = true;
-    System.out.println("El código es correcto");
-    return valido;
-    
-    } else {
-    System.out.println("El código no es correcto");
-    return valido;
-    }}
 
     /**
      * This function validates the user's input and throws an exception if the input is invalid.
@@ -169,4 +147,4 @@ public class CodigoSeguridad {
         }
     }
 }
-}
+
